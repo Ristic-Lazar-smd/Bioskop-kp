@@ -49,30 +49,8 @@ INSERT INTO `film` (`filmID`, `nazivFilma`) VALUES
 CREATE TABLE `rezervacija` (
   `rezID` int(16) NOT NULL,
   `filmID` int(16) NOT NULL,
-  `salaID` int(16) NOT NULL,
   `sedisteID` int(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sala`
---
-
-CREATE TABLE `sala` (
-  `salaID` int(16) NOT NULL,
-  `brojSale` int(16) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `sala`
---
-
-INSERT INTO `sala` (`salaID`, `brojSale`) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4);
 
 -- --------------------------------------------------------
 
@@ -82,24 +60,25 @@ INSERT INTO `sala` (`salaID`, `brojSale`) VALUES
 
 CREATE TABLE `sediste` (
   `sedisteID` int(16) NOT NULL,
-  `brojSedista` int(16) NOT NULL
+  `brojSedista` int(16) NOT NULL,
+  `statusSedista` int(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `sediste`
 --
 
-INSERT INTO `sediste` (`sedisteID`, `brojSedista`) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 7),
-(8, 8),
-(9, 9),
-(10, 10);
+INSERT INTO `sediste` (`sedisteID`, `brojSedista`,`statusSedista`) VALUES
+(1, 1, 0),
+(2, 2, 0),
+(3, 3, 1),
+(4, 4, 1),
+(5, 5, 0),
+(6, 6, 1),
+(7, 7, 2),
+(8, 8, 1),
+(9, 9, 1),
+(10, 10, 0);
 
 --
 -- Indexes for dumped tables
@@ -117,14 +96,7 @@ ALTER TABLE `film`
 ALTER TABLE `rezervacija`
   ADD PRIMARY KEY (`rezID`),
   ADD KEY `fk` (`filmID`),
-  ADD KEY `fk1` (`salaID`),
   ADD KEY `fk2` (`sedisteID`);
-
---
--- Indexes for table `sala`
---
-ALTER TABLE `sala`
-  ADD PRIMARY KEY (`salaID`);
 
 --
 -- Indexes for table `sediste`
@@ -149,12 +121,6 @@ ALTER TABLE `rezervacija`
   MODIFY `rezID` int(16) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `sala`
---
-ALTER TABLE `sala`
-  MODIFY `salaID` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT for table `sediste`
 --
 ALTER TABLE `sediste`
@@ -169,7 +135,6 @@ ALTER TABLE `sediste`
 --
 ALTER TABLE `rezervacija`
   ADD CONSTRAINT `fk` FOREIGN KEY (`filmID`) REFERENCES `film` (`filmID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk1` FOREIGN KEY (`salaID`) REFERENCES `sala` (`salaID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk2` FOREIGN KEY (`sedisteID`) REFERENCES `sediste` (`sedisteID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
