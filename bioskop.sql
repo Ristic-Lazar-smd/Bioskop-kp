@@ -75,7 +75,7 @@ INSERT INTO `sediste` (`sedisteID`, `brojSedista`,`statusSedista`) VALUES
 (4, 4, 1),
 (5, 5, 0),
 (6, 6, 1),
-(7, 7, 2),
+(7, 7, 1),
 (8, 8, 1),
 (9, 9, 1),
 (10, 10, 0);
