@@ -2,15 +2,17 @@ const seats = document.querySelectorAll(".seat");
 
 seats.forEach((seat) => {
   seat.addEventListener("click", async () => {
-    const filmID = 1; // ID filma koji se rezerviše
-    const sedisteID = seat.dataset.sedisteId; // Pretpostavljam da imate neki atribut za ID sedišta
+    const filmID = 1;
+    const sedisteID = seat.dataset.sedisteId;
+
     try {
       const response = await reserveSeat(filmID, sedisteID);
       console.log(response);
-      // Ažurirajte prikaz sedišta nakon rezervacije
-      // Na primer, promenite boju sedišta na crvenu
-      seat.classList.remove("available");
-      seat.classList.add("reserved");
+
+      if (seat.dataset.statusSedista === "0") {
+        seat.classList.remove("available");
+        seat.classList.add("reserved");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -21,20 +23,23 @@ const reservedSeats = document.querySelectorAll(".seat.reserved");
 
 reservedSeats.forEach((seat) => {
   seat.addEventListener("click", async () => {
-    const filmID = 1; // ID filma čija se rezervacija oslobađa
+    const filmID = 1;
     const sedisteID = seat.dataset.sedisteId;
+
     try {
       const response = await releaseSeat(filmID, sedisteID);
       console.log(response);
-      seat.classList.remove("reserved");
-      seat.classList.add("available");
+
+      if (seat.dataset.statusSedista === "1") {
+        seat.classList.remove("reserved");
+        seat.classList.add("available");
+      }
     } catch (error) {
       console.error(error);
     }
   });
 });
 
-// Ovo je primer funkcije za prikazivanje sedišta, treba prilagoditi vašoj strukturi
 function showSeats(seats) {
   const seatContainer = document.getElementById("seat-container");
 
@@ -43,10 +48,11 @@ function showSeats(seats) {
     seatItem.classList.add("seat");
     seatItem.textContent = seat.brojSedista;
     seatItem.dataset.sedisteId = seat.sedisteID;
+    seatItem.dataset.statusSedista = seat.statusSedista;
 
-    if (seat.statusSedista === 0) {
+    if (seat.statusSedista === "0") {
       seatItem.classList.add("available");
-    } else if (seat.statusSedista === 1) {
+    } else if (seat.statusSedista === "1") {
       seatItem.classList.add("reserved");
     }
 
@@ -54,10 +60,9 @@ function showSeats(seats) {
   });
 }
 
-// Poziv funkcije za prikazivanje sedišta
 fetch("api.php", {
   method: "POST",
-  body: JSON.stringify({ action: "getSeats" }), // Dodajte ovu akciju u PHP API
+  body: JSON.stringify({ action: "getSeats" }),
   headers: {
     "Content-Type": "application/json",
   },
