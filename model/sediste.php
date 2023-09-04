@@ -13,9 +13,20 @@ class Sediste
 
     public static function getAll(mysqli $conn)
     {
-        $q = "SELECT * FROM sediste";
-        return $conn->query($q);
+        $sql = "SELECT * FROM sediste";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $seatsArray = array();
+            while ($row = $result->fetch_assoc()) {
+                $seatsArray[] = $row;
+            }
+            return $seatsArray;
+        } else {
+            return array(); // Vratite prazan niz ako nema sedišta
+        }
     }
+    
 
     public static function deleteById($sedisteID, mysqli $conn)
     {

@@ -3,14 +3,12 @@ body {
   padding: 0;
 }
 
-/* Osnovni stil za header */
 header {
-  background-color: #333; /* Boja pozadine */
-  color: white; /* Boja teksta */
-  padding: 10px 0; /* Prostor iznad i ispod headera */
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
 }
 
-/* Stil za CineMAX link u headeru */
 .cinemax-logo {
   color: rgb(28, 103, 168);
   font-size: 24px;
@@ -39,22 +37,21 @@ nav ul li a:hover {
   opacity: 0.8;
 }
 
-/* Stil za footer */
 footer {
   background-color: #333;
   color: white;
   padding: 20px 0;
   width: 100%;
 }
-/* Stil za link "ovde" u footeru */
+
 footer a {
   text-decoration: none;
-  color: white; /* Boja linka */
+  color: white;
   font-weight: bold;
 }
 
 footer a:hover {
-  color: #004e9e; /* Boja linka na hover */
+  color: #004e9e;
 }
 
 .footer-content {
@@ -84,15 +81,14 @@ footer a:hover {
   margin: 0;
 }
 
-/* Stil za uvodni deo na početnoj stranici */
 .welcome-section {
-  background-image: url("img/background.jpg"); /* Dodajte putanju do pozadinske slike */
+  background-image: url("img/background.jpg");
   background-size: cover;
   background-position: center;
   color: white;
   text-align: center;
   padding: 100px 0;
-  height: calc(100vh - 120px); /* 120px - Visina headera i footera */
+  height: calc(100vh - 120px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -108,11 +104,10 @@ footer a:hover {
   margin-bottom: 30px;
 }
 
-/* Stil za dugme za rezervaciju */
 .reserve-button {
   display: inline-block;
   padding: 15px 30px;
-  background-color: #ff5722; /* Boja dugmeta */
+  background-color: #ff5722;
   color: white;
   font-size: 20px;
   text-decoration: none;
@@ -120,18 +115,16 @@ footer a:hover {
 }
 
 .reserve-button:hover {
-  background-color: #ff4500; /* Boja dugmeta na hover */
+  background-color: #ff4500;
 }
 
-/* Stil za srednju sekciju sa lokacijama */
 .location-section {
-  background-image: url("img/background.jpg"); /* Dodajte putanju do pozadinske slike */
+  background-image: url("img/background.jpg");
   background-size: cover;
   background-position: center;
   color: white;
   text-align: center;
   padding: 100px 0;
-  /* height: calc(100vh - 120px); */ /* Uklonite ovu liniju */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -143,9 +136,9 @@ footer a:hover {
 }
 
 .location {
-  margin: 20px; /* Dodajte odgovarajući razmak između lokacija */
+  margin: 20px;
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.6); /* Boja pozadine sa providnošću */
+  background-color: rgba(0, 0, 0, 0.6);
   border-radius: 10px;
 }
 
@@ -157,4 +150,114 @@ footer a:hover {
 .location p {
   font-size: 18px;
   margin: 0;
+}
+
+.modal {
+  display: none; /* Modal je inicijalno sakriven */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Stil za sadržaj modala */
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Stil za dugme za zatvaranje modala */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Postavite .films-section kao fleks kontejner i centralizujte sadržaj vertikalno */
+.films-section {
+  background-image: url("img/background.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  min-height: calc(100vh - 120px); /* Promenite 'height' u 'min-height' */
+  display: flex;
+  flex-direction: column; /* Postavite orijentaciju na kolonu (vertikalno centriranje) */
+  justify-content: center; /* Centralizujte sadržaj vertikalno */
+  align-items: center; /* Centralizujte sadržaj horizontalno */
+  text-align: center; /* Centralizujte tekst */
+}
+
+/* Dodajte ovaj stil za .films-section h2 da podignete naslov na vrh sekcije */
+.films-section h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+/* Stilizacija dugmadi za filmove */
+.film-button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Stilizacija dugmadi na hover */
+.film-button:hover {
+  background-color: #2980b9;
+}
+
+/* Podešavanje margine za dugmad za filmove kako biste ih razdvojili od naslova */
+.film-button + .film-button {
+  margin-top: 10px;
+}
+
+/* Stilizacija za h3 ispod dugmadi */
+.films-section h3 {
+  text-align: center;
+  margin-bottom: 10px; /* Dodajte odgovarajuću marginu iznad h3 */
+}
+
+.seats-heading {
+  display: none;
+}
+
+/* Stilizujemo sedišta kao kockice */
+.seat-button {
+  width: 40px;
+  height: 40px;
+  background-color: #ccc; /* Boja pozadine kockice */
+  color: #fff; /* Boja teksta unutar kockice */
+  border: none;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px; /* Zaobljeni uglovi */
+  text-align: center;
+}
+
+/* Stilizujemo sedišta na hover */
+.seat-button:hover {
+  background-color: #3498db; /* Promenjena boja pozadine na hover */
+  color: #fff; /* Boja teksta na hover */
 }

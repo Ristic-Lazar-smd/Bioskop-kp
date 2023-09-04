@@ -12,7 +12,7 @@
             <ul>
                 <li><a href="home.php" class="cinemax-logo">CineMAX</a></li>
                 <li><a href="rezervisanje.php">Rezervacija</a></li>
-                <li><a href="lokacije.php">Naše Lokacije</a></li> <!-- Izmena linka za "Naše Lokacije" -->
+                <li><a href="lokacije.php">Naše Lokacije</a></li> 
             </ul>
         </nav>
     </header>

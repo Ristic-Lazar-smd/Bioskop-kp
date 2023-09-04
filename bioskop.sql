@@ -28,8 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `film` (
-  `filmID` int(16) NOT NULL,
-  `nazivFilma` varchar(64) NOT NULL
+  `filmID` int(16) NOT NULL AUTO_INCREMENT,
+  `nazivFilma` varchar(64) NOT NULL,
+  PRIMARY KEY (`filmID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -47,9 +48,11 @@ INSERT INTO `film` (`filmID`, `nazivFilma`) VALUES
 --
 
 CREATE TABLE `rezervacija` (
-  `rezID` int(16) NOT NULL,
+  `rezID` int(16) NOT NULL AUTO_INCREMENT,
   `filmID` int(16) NOT NULL,
-  `sedisteID` int(16) NOT NULL
+  `sedisteID` int(16) NOT NULL,
+  PRIMARY KEY (`rezID`),
+  FOREIGN KEY (`filmID`) REFERENCES `film` (`filmID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -59,83 +62,42 @@ CREATE TABLE `rezervacija` (
 --
 
 CREATE TABLE `sediste` (
-  `sedisteID` int(16) NOT NULL,
+  `sedisteID` int(16) NOT NULL AUTO_INCREMENT,
   `brojSedista` int(16) NOT NULL,
-  `statusSedista` int(16) NOT NULL
+  PRIMARY KEY (`sedisteID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `sediste`
 --
 
-INSERT INTO `sediste` (`sedisteID`, `brojSedista`,`statusSedista`) VALUES
-(1, 1, 0),
-(2, 2, 0),
-(3, 3, 1),
-(4, 4, 1),
-(5, 5, 0),
-(6, 6, 1),
-(7, 7, 1),
-(8, 8, 1),
-(9, 9, 1),
-(10, 10, 0);
+INSERT INTO `sediste` (`brojSedista`) VALUES
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8),
+(9),
+(10);
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `film`
---
-ALTER TABLE `film`
-  ADD PRIMARY KEY (`filmID`);
 
---
--- Indexes for table `rezervacija`
---
-ALTER TABLE `rezervacija`
-  ADD PRIMARY KEY (`rezID`),
-  ADD KEY `fk` (`filmID`),
-  ADD KEY `fk2` (`sedisteID`);
-
---
--- Indexes for table `sediste`
---
-ALTER TABLE `sediste`
-  ADD PRIMARY KEY (`sedisteID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `film`
---
-ALTER TABLE `film`
-  MODIFY `filmID` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `rezervacija`
---
-ALTER TABLE `rezervacija`
-  MODIFY `rezID` int(16) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `sediste`
---
-ALTER TABLE `sediste`
-  MODIFY `sedisteID` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `rezervacija`
---
-ALTER TABLE `rezervacija`
-  ADD CONSTRAINT `fk` FOREIGN KEY (`filmID`) REFERENCES `film` (`filmID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk2` FOREIGN KEY (`sedisteID`) REFERENCES `sediste` (`sedisteID`) ON DELETE CASCADE ON UPDATE CASCADE;
+INSERT INTO `rezervacija` (`filmID`, `sedisteID`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 7),
+(1, 9),
+(2, 4),
+(2, 9),
+(2, 10),
+(2, 2),
+(2, 3),
+(2, 5);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
