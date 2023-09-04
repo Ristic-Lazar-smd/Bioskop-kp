@@ -13,7 +13,7 @@
             <ul>
             <li><a href="home.php" class="cinemax-logo">CineMAX</a></li>
                 <li><a href="rezervisanje.php">Rezervacija</a></li>
-                <li><a href="kontakt.php">Kontakt</a></li>
+                <li><a href="lokacija.php">Lokacija</a></li>
             </ul>
         </nav>
     </header>
@@ -28,13 +28,15 @@
     <footer>
         <div class="footer-content">
             <div class="location">
-                <h3>Lokacija</h3>
-                <p>Vaša adresa</p>
+                <h3>Lokacije</h3>
+                <p>Možete nas naći <a href="lokacija.php">ovde</a></p>
             </div>
             <div class="contact-info">
                 <h3>Kontakt Informacije</h3>
-                <p>Email: your@email.com</p>
-                <p>Telefon: +123456789</p>
+                <p>Email: cimemax@bioskop.rs</p>
+                <p>Telefon: +634444444</p>
+                <p>Instagram: @cinemaxbioskop</p>
+                <p>Twitter: twitter/Cinemax</p>
             </div>
         </div>
     </footer>

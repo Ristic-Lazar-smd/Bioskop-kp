@@ -39,13 +39,22 @@ nav ul li a:hover {
   opacity: 0.8;
 }
 
+/* Stil za footer */
 footer {
   background-color: #333;
   color: white;
   padding: 20px 0;
-  position: fixed;
-  bottom: 0;
   width: 100%;
+}
+/* Stil za link "ovde" u footeru */
+footer a {
+  text-decoration: none;
+  color: white; /* Boja linka */
+  font-weight: bold;
+}
+
+footer a:hover {
+  color: #004e9e; /* Boja linka na hover */
 }
 
 .footer-content {
@@ -72,5 +81,80 @@ footer {
 .location p,
 .contact-info p {
   font-size: 1rem;
+  margin: 0;
+}
+
+/* Stil za uvodni deo na početnoj stranici */
+.welcome-section {
+  background-image: url("img/background.jpg"); /* Dodajte putanju do pozadinske slike */
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 100px 0;
+  height: calc(100vh - 120px); /* 120px - Visina headera i footera */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-section h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.welcome-section p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+/* Stil za dugme za rezervaciju */
+.reserve-button {
+  display: inline-block;
+  padding: 15px 30px;
+  background-color: #ff5722; /* Boja dugmeta */
+  color: white;
+  font-size: 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.reserve-button:hover {
+  background-color: #ff4500; /* Boja dugmeta na hover */
+}
+
+/* Stil za srednju sekciju sa lokacijama */
+.location-section {
+  background-image: url("img/background.jpg"); /* Dodajte putanju do pozadinske slike */
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 100px 0;
+  /* height: calc(100vh - 120px); */ /* Uklonite ovu liniju */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.location-section h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.location {
+  margin: 20px; /* Dodajte odgovarajući razmak između lokacija */
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.6); /* Boja pozadine sa providnošću */
+  border-radius: 10px;
+}
+
+.location h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.location p {
+  font-size: 18px;
   margin: 0;
 }

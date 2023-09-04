@@ -4,28 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"> 
-    <title>CineMAX</title>
+    <title>Lokacije</title>
 </head>
 <body>
     <header>
         <nav>
             <ul>
-            <li><a href="home.php" class="cinemax-logo">CineMAX</a></li>
+                <li><a href="home.php" class="cinemax-logo">CineMAX</a></li>
                 <li><a href="rezervisanje.php">Rezervacija</a></li>
-                <li><a href="lokacija.php">Lokacija</a></li>
+                <li><a href="lokacije.php">Naše Lokacije</a></li> <!-- Izmena linka za "Naše Lokacije" -->
             </ul>
         </nav>
     </header>
-    <section class="welcome-section">
+
+    <section class="location-section">
         <div class="container">
-            <h1>Dobrodošli u CineMAX</h1>
-            <p>Mesto najboljeg doživljaja u Beogradu</p>
-            <p>Uživajte u najnovijim naslovima u najbolje opremljenim salama.</p>
-            <p>Izaberite film, rezervišite svoje mesto i uživajte.</p>
-            <a href="rezervisanje.php" class="reserve-button">Rezerviši</a>
+            <h1>Naše Lokacije</h1>
+            <div class="location">
+                <h2>Vračar</h2>
+                <p>Nebojšina 17</p>
+            </div>
+            <div class="location">
+                <h2>Braće Jerković</h2>
+                <p>Indire Gandi 11</p>
+            </div>
+            <div class="location">
+                <h2>Dorćol</h2>
+                <p>Jevrejska 20</p>
+            </div>
         </div>
     </section>
-       <footer>
+
+  
+    
+    <footer>
         <div class="footer-content">
             <div class="location">
                 <h3>Lokacije</h3>
@@ -42,4 +54,3 @@
     </footer>
 </body>
 </html>
-
