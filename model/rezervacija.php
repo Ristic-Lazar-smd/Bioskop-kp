@@ -51,4 +51,20 @@ class Rezervacija
         }
         return $myArray;
     }
+
+
+public static function isSeatReserved($filmID, $sedisteID, mysqli $conn)
+{
+    $q = "SELECT COUNT(*) as count FROM rezervacija WHERE filmID='$filmID' AND sedisteID='$sedisteID'";
+    $result = $conn->query($q);
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $count = $row["count"];
+        return $count > 0;
+    } else {
+        return false;
+    }
+}
+
 }

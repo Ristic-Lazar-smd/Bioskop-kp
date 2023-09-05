@@ -8,7 +8,7 @@ include 'model/sediste.php';
 
 
 
-!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -30,8 +30,8 @@ include 'model/sediste.php';
     <h2>Filmovi koji se trenutno prikazuju:</h2>
     <div id="films-container"></div>
     <div id="buttons-container"> 
-    <h3 class="seats-heading" style="display: none;">Sedišta za izabrani film:</h3>
-    <div class="seat-grid" id="seat-grid"></div>
+        <h3 class="seats-heading" style="display: none;">Sedišta za izabrani film:</h3>
+        <div class="seat-grid" id="seat-grid"></div>
     </div>
 </section>
 

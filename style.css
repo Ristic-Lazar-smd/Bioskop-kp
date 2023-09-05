@@ -238,26 +238,16 @@ footer a:hover {
   margin-bottom: 10px; /* Dodajte odgovarajuću marginu iznad h3 */
 }
 
-.seats-heading {
-  display: none;
-}
-
-/* Stilizujemo sedišta kao kockice */
-.seat-button {
-  width: 40px;
-  height: 40px;
-  background-color: #ccc; /* Boja pozadine kockice */
-  color: #fff; /* Boja teksta unutar kockice */
-  border: none;
+/* Dodajte stilizaciju za sedišta */
+.seat {
+  width: 30px;
+  height: 30px;
+  background-color: #ccc;
   margin: 5px;
+  display: inline-block;
   cursor: pointer;
-  font-size: 16px;
-  border-radius: 5px; /* Zaobljeni uglovi */
-  text-align: center;
 }
 
-/* Stilizujemo sedišta na hover */
-.seat-button:hover {
-  background-color: #3498db; /* Promenjena boja pozadine na hover */
-  color: #fff; /* Boja teksta na hover */
+.seat.reserved {
+  background-color: red;
 }
