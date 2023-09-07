@@ -1,90 +1,85 @@
-let filmID; // Dodali smo globalnu promenljivu za filmID
+document.addEventListener("DOMContentLoaded", () => {
+  let filmID;
+  let seatReserved = false;
+  let selectedSeatID;
+  async function loadAvailableFilms() {
+    try {
+      const response = await fetch("api.php");
 
-// Učitavanje dostupnih filmova iz baze podataka
-async function loadAvailableFilms() {
-  try {
-    const response = await fetch("api.php");
+      if (!response.ok) {
+        throw new Error("Unable to load available films.");
+      }
 
-    if (!response.ok) {
-      throw new Error("Unable to load available films.");
+      const films = await response.json();
+
+      if (films && films.length > 0) {
+        displayFilms(films);
+      } else {
+        console.log("Nema dostupnih filmova.");
+      }
+    } catch (error) {
+      console.error(error);
     }
-
-    const films = await response.json();
-
-    if (films && films.length > 0) {
-      displayFilms(films);
-    } else {
-      console.log("Nema dostupnih filmova.");
-    }
-  } catch (error) {
-    console.error(error);
   }
-}
 
-function displayFilms(films) {
-  const filmsContainer = document.getElementById("films-container");
+  function displayFilms(films) {
+    const filmsContainer = document.getElementById("films-container");
 
-  films.forEach((film) => {
-    const filmButton = document.createElement("button");
-    filmButton.classList.add("film-button");
-    filmButton.textContent = film.nazivFilma;
+    films.forEach((film) => {
+      const filmButton = document.createElement("button");
+      filmButton.classList.add("film-button");
+      filmButton.textContent = film.nazivFilma;
 
-    // Dodajte atribut data-film-id za svako dugme sa ID filma
-    filmButton.dataset.filmId = film.filmID;
+      filmButton.dataset.filmId = film.filmID;
 
-    filmButton.addEventListener("click", () => {
-      filmID = film.filmID;
-      // Postavite filmID ovde kako biste ga prosledili funkciji
-      loadAvailableSeatsForFilm(filmID);
+      filmButton.addEventListener("click", async (event) => {
+        filmID = event.target.dataset.filmId;
+        await loadAvailableSeatsForFilm(filmID);
+      });
+
+      filmsContainer.appendChild(filmButton);
     });
-
-    filmsContainer.appendChild(filmButton);
-  });
-}
-
-// Pozovite funkciju za učitavanje filmova kada se stranica učita
-loadAvailableFilms();
-
-const modal = document.getElementById("myModal");
-const closeModal = document.getElementById("closeModal");
-
-// Funkcija za otvaranje moda
-function openModal() {
-  modal.style.display = "block";
-}
-
-// Funkcija za zatvaranje moda
-function closeModalFunction() {
-  modal.style.display = "none";
-}
-
-// Dodajte događaje za otvaranje modala
-const filmsContainer = document.getElementById("films-container");
-
-// Dodajte događaj za zatvaranje moda kada se klikne na dugme za zatvaranje
-closeModal.addEventListener("click", closeModalFunction);
-
-// Zatvorite modal ako korisnik klikne bilo gde izvan moda
-window.addEventListener("click", function (event) {
-  if (event.target == modal) {
-    closeModalFunction();
   }
-});
 
-// Sakrijemo h3 za sedišta početno
-const seatsHeading = document.querySelector(".seats-heading");
-seatsHeading.style.display = "none";
+  loadAvailableFilms();
 
-async function loadAvailableSeatsForFilm() {
-  try {
-    const response = await fetch(`api_seats.php`);
+  function showModal() {
+    const modal = document.getElementById("myModal");
+    modal.style.display = "block";
+  }
 
-    if (!response.ok) {
-      throw new Error("Unable to load available seats.");
+  function closeModal() {
+    const modal = document.getElementById("myModal");
+    modal.style.display = "none";
+  }
+
+  const seatsHeading = document.querySelector(".seats-heading");
+  seatsHeading.style.display = "none";
+
+  const buyButton = document.getElementById("buyButton");
+  buyButton.addEventListener("click", () => {
+    if (seatReserved) {
+      closeModal();
     }
+  });
 
-    const contentType = response.headers.get("content-type");
-    if (contentType && contentType.indexOf("application/json") !== -1) {
+  const closeModalButton = document.getElementById("closeModal");
+  closeModalButton.addEventListener("click", () => {
+    closeModal();
+    if (selectedSeatID) {
+      updateSeatColor(selectedSeatID, "green");
+    }
+    clearSeatTemporaryReserved(selectedSeatID);
+  });
+
+  async function loadAvailableSeatsForFilm(filmID) {
+    try {
+      const response = await fetch(`api_seats.php?filmID=${filmID}`);
+
+      if (!response.ok) {
+        throw new Error("Unable to load available seats.");
+      }
+
       const seatsData = await response.json();
 
       if (seatsData.error) {
@@ -101,57 +96,112 @@ async function loadAvailableSeatsForFilm() {
             seatDiv.classList.add("seat");
             seatDiv.setAttribute("data-seat-id", seat.sedisteID);
 
-            // Dodajte logiku za proveru rezervacija za sedište
-            const isReserved = await isSeatReserved(seat.sedisteID);
+            const reservedSeats = await getReservedSeatsForFilm(filmID);
+            const isSeatReserved = reservedSeats.includes(seat.sedisteID);
 
-            if (isReserved) {
+            if (isSeatReserved) {
               seatDiv.classList.add("reserved");
             } else {
               seatDiv.classList.add("available");
+              seatDiv.addEventListener("click", () => {
+                const seatID = seat.sedisteID;
+                selectSeat(seatID);
+              });
             }
-
-            seatDiv.addEventListener("click", () => {
-              const seatID = seat.sedisteID;
-              reserveSeat(seatID); // Funkcija za rezervaciju sedišta
-            });
 
             seatsContainer.appendChild(seatDiv);
           });
         } else {
           console.log("Nema dostupnih sedišta.");
         }
-
-        const seatsHeading = document.querySelector(".seats-heading");
         seatsHeading.style.display = "block";
       }
-    } else {
-      console.error("Response is not valid JSON.");
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
   }
-}
-
-async function isSeatReserved(seatID) {
-  try {
-    const response = await fetch(
-      `api_reserved_seat.php?filmID=${filmID}&sedisteID=${seatID}`
-    );
-
-    if (!response.ok) {
-      throw new Error("Unable to check seat reservation.");
+  function updateSeatColor(seatID, color) {
+    const seat = document.querySelector(`.seat[data-seat-id="${seatID}"]`);
+    if (seat) {
+      seat.style.backgroundColor = color;
     }
+  }
 
-    const contentType = response.headers.get("content-type");
-    if (contentType && contentType.indexOf("application/json") !== -1) {
+  function selectSeat(seatID) {
+    if (selectedSeatID === seatID) {
+      selectedSeatID = undefined;
+    } else {
+      selectedSeatID = seatID;
+    }
+    if (!isSeatTemporaryReserved(seatID)) {
+      setSeatTemporaryReserved(seatID);
+      updateSeatColor(seatID, "orange");
+      showModal();
+    }
+  }
+
+  async function getReservedSeatsForFilm(filmID) {
+    try {
+      const response = await fetch(`api_reserved_seat.php?filmID=${filmID}`);
+
+      if (!response.ok) {
+        throw new Error("Unable to get reserved seats.");
+      }
+
       const data = await response.json();
-      return data.reserved;
-    } else {
-      console.error("Response is not valid JSON.");
-      return false;
+      return data.reservedSeats;
+    } catch (error) {
+      console.error(error);
+      return [];
     }
-  } catch (error) {
-    console.error(error);
-    return false;
   }
-}
+
+  async function purchaseTicket(filmID, seatID) {
+    try {
+      console.log("Kupovina za filmID:", filmID, "i sedisteID:", seatID);
+      const response = await fetch(
+        `api_purchase_ticket.php?filmID=${filmID}&sedisteID=${seatID}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Unable to purchase ticket.");
+      }
+
+      const data = await response.json();
+      if (data.success) {
+        clearSeatTemporaryReserved(seatID);
+        updateSeatColor(seatID, "red");
+
+        closeModal();
+        console.log("Uspešno ste kupili kartu.");
+      } else {
+        console.log("Kupovina nije uspela.");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const purchaseButton = document.getElementById("buyButton");
+  purchaseButton.addEventListener("click", () => {
+    if (selectedSeatID) {
+      purchaseTicket(filmID, selectedSeatID);
+    } else {
+      console.error("SedisteID nije odabrano.");
+    }
+  });
+
+  const temporaryReservedSeats = new Set();
+
+  function isSeatTemporaryReserved(seatID) {
+    return temporaryReservedSeats.has(seatID);
+  }
+
+  function setSeatTemporaryReserved(seatID) {
+    temporaryReservedSeats.add(seatID);
+  }
+
+  function clearSeatTemporaryReserved(seatID) {
+    temporaryReservedSeats.delete(seatID);
+  }
+});

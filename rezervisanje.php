@@ -40,17 +40,16 @@ include 'model/sediste.php';
 
 <div id="myModal" class="modal">
   <div class="modal-content">
-    <span id="closeModal" class="close">&times;</span>
-    <h2>Cena i plaćanje</h2>
-    <p>Ovde možete prikazati informacije o ceni i opcijama plaćanja.</p>
-    <p>Na primer:</p>
+    <span id="closeModal" class="closeModal">&times;</span>
+    <h2>Sedište</h2>
     <ul>
       <li>Cena: $10</li>
       <li>Metode plaćanja: Kartica, PayPal</li>
     </ul>
-    <button id="buyButton">Kupi</button>
+    <button id="buyButton" class="buyButton">Kupi</button>
   </div>
 </div>
+
 
 <footer>
     <div class="footer-content">
