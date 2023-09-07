@@ -11,7 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["filmID"]) && isset($_GE
     $sedisteID = isset($_GET["sedisteID"]) ? $_GET["sedisteID"] : null;
     
     if ($filmID !== null && $sedisteID !== null) {
-        // Nastavite sa obradom samo ako su $filmID i $sedisteID validni
         $conn = new mysqli($host, $username, $password, $db);
     
         if ($conn->connect_error) {
